@@ -5,11 +5,11 @@ app = Flask(__name__)
 
 allowed_ip = '10.0.0.'
 
-#@app.before_request
-#def limit_remote_addr():
-#        client_ip = str(request.remote_addr)
-#        if not client_ip.startswith(allowed_ip):
-#                abort(403)
+@app.before_request
+def limit_remote_addr():
+        client_ip = str(request.remote_addr)
+        if not client_ip.startswith(allowed_ip):
+                abort(403)
 
 def auth_required(f):
 	@wraps(f)
