@@ -5,11 +5,11 @@ app = Flask(__name__)
 
 allowed_ip = '10.0.0.'
 
-@app.before_request
-def limit_remote_addr():
-        client_ip = str(request.remote_addr)
-        if not client_ip.startswith(allowed_ip):
-                abort(403)
+#@app.before_request
+#def limit_remote_addr():
+#        client_ip = str(request.remote_addr)
+#        if not client_ip.startswith(allowed_ip):
+#                abort(403)
 
 def auth_required(f):
 	@wraps(f)
@@ -44,4 +44,13 @@ def simu():
                 dict = { "message": "You did not send a JSON object !"}
                 result = make_response(jsonify(dict), 400) #status code 400 means error
                 return  result
-app.run(port=8080)
+
+@app.route("/ping", methods=["GET"])
+def ping():
+    return make_response(jsonify({"message": "pong"}), 200)
+
+
+# Entrypoint for development only
+if __name__ == "__main__":
+    app.run(port=8080)
+
